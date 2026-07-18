@@ -26,7 +26,7 @@ const keys = {};
 
 const enemies = [];
 const carImg = new Image();
-carImg.src = "car.png";
+carImg.src = "./car.png";
 
 function createEnemy() {
     const lanes = [35, 135, 235, 335];
@@ -95,10 +95,16 @@ function drawRoad() {
 }
 
 function drawPlayer() {
-    ctx.drawImage(carImg, player.x, player.y, player.width, player.height);
-
-
+    if (carImg.complete) {
+        ctx.drawImage(carImg, player.x, player.y, player.width, player.height);
+    } else {
+        ctx.fillStyle = "red";
+        ctx.fillRect(player.x, player.y, player.width, player.height);
+    }
 }
+
+
+
 
 function drawEnemies() {
 
