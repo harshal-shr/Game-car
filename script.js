@@ -45,11 +45,37 @@ document.addEventListener("keyup", e => {
     keys[e.key] = false;
 });
 
-leftBtn.onmousedown = () => keys["ArrowLeft"] = true;
-leftBtn.onmouseup = () => keys["ArrowLeft"] = false;
+leftBtn.addEventListener("touchstart", () => {
+    keys["ArrowLeft"] = true;
+});
 
-rightBtn.onmousedown = () => keys["ArrowRight"] = true;
-rightBtn.onmouseup = () => keys["ArrowRight"] = false;
+leftBtn.addEventListener("touchend", () => {
+    keys["ArrowLeft"] = false;
+});
+
+rightBtn.addEventListener("touchstart", () => {
+    keys["ArrowRight"] = true;
+});
+
+rightBtn.addEventListener("touchend", () => {
+    keys["ArrowRight"] = false;
+});
+
+leftBtn.addEventListener("mousedown", () => {
+    keys["ArrowLeft"] = true;
+});
+
+leftBtn.addEventListener("mouseup", () => {
+    keys["ArrowLeft"] = false;
+});
+
+rightBtn.addEventListener("mousedown", () => {
+    keys["ArrowRight"] = true;
+});
+
+rightBtn.addEventListener("mouseup", () => {
+    keys["ArrowRight"] = false;
+});
 
 function drawRoad() {
 
