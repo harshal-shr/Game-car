@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Loop Car Race</title>
+
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<div class="game-container">
+
+<div class="hud">
+<h2>🚗 Loop Car Race</h2>
+<div class="score">
+Score : <span id="score">0</span>
+</div>
+</div>
+
+<canvas id="gameCanvas" width="400" height="700"></canvas>
+
+<div class="buttons">
+<button id="startBtn">Start Game</button>
+<button id="restartBtn">Restart</button>
+</div>
+
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>
