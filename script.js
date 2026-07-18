@@ -37,45 +37,39 @@ function createEnemy() {
     });
 }
 
-document.addEventListener("keydown", e => {
-    keys[e.key] = true;
-});
-
-document.addEventListener("keyup", e => {
-    keys[e.key] = false;
-});
-
-leftBtn.addEventListener("touchstart", () => {
+function holdLeft(e){
+    if(e) e.preventDefault();
     keys["ArrowLeft"] = true;
-});
+}
 
-leftBtn.addEventListener("touchend", () => {
+function releaseLeft(e){
+    if(e) e.preventDefault();
     keys["ArrowLeft"] = false;
-});
+}
 
-rightBtn.addEventListener("touchstart", () => {
+function holdRight(e){
+    if(e) e.preventDefault();
     keys["ArrowRight"] = true;
-});
+}
 
-rightBtn.addEventListener("touchend", () => {
+function releaseRight(e){
+    if(e) e.preventDefault();
     keys["ArrowRight"] = false;
-});
+}
 
-leftBtn.addEventListener("mousedown", () => {
-    keys["ArrowLeft"] = true;
-});
+leftBtn.addEventListener("touchstart", holdLeft, {passive:false});
+leftBtn.addEventListener("touchend", releaseLeft);
+leftBtn.addEventListener("touchcancel", releaseLeft);
+leftBtn.addEventListener("mousedown", holdLeft);
+leftBtn.addEventListener("mouseup", releaseLeft);
+leftBtn.addEventListener("mouseleave", releaseLeft);
 
-leftBtn.addEventListener("mouseup", () => {
-    keys["ArrowLeft"] = false;
-});
-
-rightBtn.addEventListener("mousedown", () => {
-    keys["ArrowRight"] = true;
-});
-
-rightBtn.addEventListener("mouseup", () => {
-    keys["ArrowRight"] = false;
-});
+rightBtn.addEventListener("touchstart", holdRight, {passive:false});
+rightBtn.addEventListener("touchend", releaseRight);
+rightBtn.addEventListener("touchcancel", releaseRight);
+rightBtn.addEventListener("mousedown", holdRight);
+rightBtn.addEventListener("mouseup", releaseRight);
+rightBtn.addEventListener("mouseleave", releaseRight);
 
 function drawRoad() {
 
