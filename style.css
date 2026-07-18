@@ -57,6 +57,9 @@ button{
     font-weight:bold;
     touch-action: none;
     user-select: none;
+    touch-action: none;
+   -webkit-user-select: none;
+    user-select: none;
 }
 
 button:hover{
