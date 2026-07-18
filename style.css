@@ -55,6 +55,8 @@ button{
     background:#00b894;
     color:#fff;
     font-weight:bold;
+    touch-action: none;
+    user-select: none;
 }
 
 button:hover{
