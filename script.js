@@ -95,9 +95,8 @@ function drawRoad() {
 }
 
 function drawPlayer() {
+    ctx.drawImage(carImg, player.x, player.y, player.width, player.height);
 
-    ctx.fillStyle = "red";
-    ctx.fillRect(player.x, player.y, player.width, player.height);
 
 }
 
