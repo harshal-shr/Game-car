@@ -25,6 +25,8 @@ const player = {
 const keys = {};
 
 const enemies = [];
+const carImg = new Image();
+carImg.src = "car.png";
 
 function createEnemy() {
     const lanes = [35, 135, 235, 335];
