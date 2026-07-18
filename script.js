@@ -2,11 +2,16 @@ const canvas = document.getElementById("gameCanvas");
 const ctx = canvas.getContext("2d");
 
 const scoreText = document.getElementById("score");
+const highScoreText = document.getElementById("highScore");
+
 const startBtn = document.getElementById("startBtn");
 const restartBtn = document.getElementById("restartBtn");
+const leftBtn = document.getElementById("leftBtn");
+const rightBtn = document.getElementById("rightBtn");
 
 let gameRunning = false;
 let score = 0;
+let highScore = 0;
 let roadOffset = 0;
 
 const player = {
@@ -14,95 +19,93 @@ const player = {
     y: 560,
     width: 60,
     height: 100,
-    speed: 8
+    speed: 7
 };
 
 const keys = {};
 
-document.addEventListener("keydown", (e)=>{
-    keys[e.key]=true;
+const enemies = [];
+
+function createEnemy() {
+    const lanes = [35, 135, 235, 335];
+    enemies.push({
+        x: lanes[Math.floor(Math.random() * lanes.length)],
+        y: -120,
+        width: 60,
+        height: 100,
+        speed: 5
+    });
+}
+
+document.addEventListener("keydown", e => {
+    keys[e.key] = true;
 });
 
-document.addEventListener("keyup", (e)=>{
-    keys[e.key]=false;
+document.addEventListener("keyup", e => {
+    keys[e.key] = false;
 });
 
-function drawRoad(){
+leftBtn.onmousedown = () => keys["ArrowLeft"] = true;
+leftBtn.onmouseup = () => keys["ArrowLeft"] = false;
 
-    ctx.fillStyle="#444";
-    ctx.fillRect(0,0,400,700);
+rightBtn.onmousedown = () => keys["ArrowRight"] = true;
+rightBtn.onmouseup = () => keys["ArrowRight"] = false;
 
-    ctx.strokeStyle="white";
-    ctx.lineWidth=6;
+function drawRoad() {
 
-    for(let i=-40;i<700;i+=60){
+    ctx.fillStyle = "#444";
+    ctx.fillRect(0, 0, 400, 700);
+
+    ctx.strokeStyle = "white";
+    ctx.lineWidth = 6;
+
+    for (let i = -60; i < 700; i += 70) {
         ctx.beginPath();
-        ctx.moveTo(200,i+roadOffset);
-        ctx.lineTo(200,i+30+roadOffset);
+        ctx.moveTo(200, i + roadOffset);
+        ctx.lineTo(200, i + 40 + roadOffset);
         ctx.stroke();
     }
 
-    roadOffset+=8;
+    roadOffset += 8;
 
-    if(roadOffset>=60)
-        roadOffset=0;
+    if (roadOffset >= 70)
+        roadOffset = 0;
 }
 
-function drawPlayer(){
+function drawPlayer() {
 
-    ctx.fillStyle="red";
-    ctx.fillRect(player.x,player.y,player.width,player.height);
-
-    ctx.fillStyle="black";
-    ctx.fillRect(player.x+10,player.y+10,40,25);
+    ctx.fillStyle = "red";
+    ctx.fillRect(player.x, player.y, player.width, player.height);
 
 }
 
-function update(){
+function drawEnemies() {
 
-    if(keys["ArrowLeft"] && player.x>20)
-        player.x-=player.speed;
+    ctx.fillStyle = "yellow";
 
-    if(keys["ArrowRight"] && player.x<320)
-        player.x+=player.speed;
+    enemies.forEach(enemy => {
+        ctx.fillRect(enemy.x, enemy.y, enemy.width, enemy.height);
+        enemy.y += enemy.speed;
+    });
+
+}
+
+function update() {
+
+    if (keys["ArrowLeft"] && player.x > 10)
+        player.x -= player.speed;
+
+    if (keys["ArrowRight"] && player.x < 330)
+        player.x += player.speed;
+
+    if (Math.random() < 0.02)
+        createEnemy();
 
     score++;
+    scoreText.innerText = score;
 
-    scoreText.innerText=score;
+    if (score > highScore) {
+        highScore = score;
+        highScoreText.innerText = highScore;
+    }
 }
-
-function gameLoop(){
-
-    if(!gameRunning) return;
-
-    ctx.clearRect(0,0,400,700);
-
-    drawRoad();
-
-    update();
-
-    drawPlayer();
-
-    requestAnimationFrame(gameLoop);
-
-}
-
-startBtn.onclick=()=>{
-
-    if(gameRunning) return;
-
-    gameRunning=true;
-
-    score=0;
-
-    gameLoop();
-
-};
-
-restartBtn.onclick=()=>{
-
-    player.x=170;
-
-    score=0;
-
-};
