@@ -109,3 +109,53 @@ function update() {
         highScoreText.innerText = highScore;
     }
 }
+
+function checkCollision() {
+    for (let enemy of enemies) {
+        if (
+            player.x < enemy.x + enemy.width &&
+            player.x + player.width > enemy.x &&
+            player.y < enemy.y + enemy.height &&
+            player.y + player.height > enemy.y
+        ) {
+            gameRunning = false;
+            alert("💥 Game Over!\nScore: " + score);
+        }
+    }
+}
+
+function gameLoop() {
+    if (!gameRunning) return;
+
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    drawRoad();
+    update();
+    drawEnemies();
+    drawPlayer();
+    checkCollision();
+
+    requestAnimationFrame(gameLoop);
+}
+
+startBtn.onclick = () => {
+    if (gameRunning) return;
+
+    gameRunning = true;
+    score = 0;
+    enemies.length = 0;
+
+    gameLoop();
+};
+
+restartBtn.onclick = () => {
+    gameRunning = false;
+
+    player.x = 170;
+    player.y = 560;
+
+    score = 0;
+    enemies.length = 0;
+
+    scoreText.innerText = "0";
+};
